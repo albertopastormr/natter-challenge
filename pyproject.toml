@@ -1,0 +1,46 @@
+[project]
+name = "natter"
+version = "1.0.0"
+description = "CLI scraper for e-commerce product data extraction"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "typer>=0.9.0",
+    "httpx>=0.27.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=5.0.0",
+    "pydantic>=2.5.0",
+]
+
+[project.scripts]
+natter = "src.cli.main:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "mypy>=1.8.0",
+    "types-beautifulsoup4>=4.12.0",
+    "lxml-stubs>=0.5.0",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "unit: marks tests as unit tests (fast, no network)",
+    "integration: marks tests as integration tests (hits the live network)",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
