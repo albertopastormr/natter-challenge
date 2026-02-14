@@ -13,13 +13,20 @@ from src.services.scraper import scrape_site
 from src.exporters.implementations import JsonExporter, CsvExporter
 
 app = typer.Typer(
-    help="Crawl the target site and output structured product data.",
+    help="Crawl target sites and output structured product data.",
     add_completion=False,
+    no_args_is_help=True,
 )
 
 # ---------------------------------------------------------------------------
 # Commands
 # ---------------------------------------------------------------------------
+
+
+@app.command()
+def version() -> None:
+    """Show the application version."""
+    typer.echo("Natter Scrapper v1.0.0")
 
 
 @app.command()
