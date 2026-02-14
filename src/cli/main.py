@@ -26,7 +26,7 @@ app = typer.Typer(
 @app.command()
 def version() -> None:
     """Show the application version."""
-    typer.echo("Natter Scrapper v1.0.0")
+    typer.echo("Natter Scraper v1.0.0")
 
 
 @app.command()
