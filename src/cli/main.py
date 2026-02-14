@@ -10,7 +10,7 @@ from typing import Annotated
 import typer
 
 from src.services.scraper import scrape_site
-from src.exporters.implementations import JsonExporter, CsvExporter
+from src.exporters.implementations import get_exporter
 
 app = typer.Typer(
     help="Crawl target sites and output structured product data.",
@@ -78,7 +78,7 @@ def scrape(
         result = asyncio.run(scrape_site(timeout=timeout))
 
         # Select exporter
-        exporter = CsvExporter() if format.lower() == "csv" else JsonExporter()
+        exporter = get_exporter(format)
         
         # Export and display
         out_message = exporter.export(result, target=output)
@@ -92,10 +92,6 @@ def scrape(
         typer.echo(typer.style(f"Error: {exc}", fg=typer.colors.RED), err=True)
         raise typer.Exit(code=1)
 
-
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     app()

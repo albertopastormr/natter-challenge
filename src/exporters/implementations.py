@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.domain.models import ScrapeResult
+    from src.exporters.base import Exporter
 
 
 class JsonExporter:
@@ -44,3 +45,21 @@ class CsvExporter:
             target.write_text(csv_data, encoding="utf-8")
             return f"Results written to {target}"
         return csv_data
+
+
+def get_exporter(format_name: str) -> Exporter:
+    """Factory to retrieve an exporter by its name.
+    
+    This keeps the CLI clean and makes it easy to add new formats.
+    """
+    registry = {
+        "json": JsonExporter,
+        "csv": CsvExporter,
+    }
+    
+    exporter_cls = registry.get(format_name.lower())
+    if not exporter_cls:
+        valid = ", ".join(registry.keys())
+        raise ValueError(f"Unknown format '{format_name}'. Valid formats are: {valid}")
+        
+    return exporter_cls()
