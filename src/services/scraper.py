@@ -24,15 +24,10 @@ DEFAULT_BASE_URL = "https://webscraper.io/test-sites/e-commerce/static"
 def get_provider(url: str) -> BaseScraperProvider:
     """Simple Factory/Registry to pick a provider based on the URL.
     
-    This is what makes the system 'multi-site ready'. 
     To add a new site, add its URL pattern here.
     """
     if "webscraper.io" in url:
         return WebScraperIoProvider()
-        
-    # Example placeholder for interview extension:
-    # if "amazon.com" in url:
-    #     return AmazonProvider()
         
     raise ValueError(f"No scraper provider registered for URL: {url}")
 

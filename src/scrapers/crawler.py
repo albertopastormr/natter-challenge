@@ -107,7 +107,7 @@ class Crawler:
         """Visit each product detail page and expand variants."""
         products: list[Product] = []
         
-        # Here's where async really shines. We'll use a semaphore to limit concurrency.
+        # semaphore to limit concurrency.
         semaphore = asyncio.Semaphore(5)
 
         async def _fetch_and_parse(url: str) -> list[Product]:

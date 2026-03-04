@@ -1,18 +1,18 @@
 # Natter — E-Commerce Product Scraper
 
-A high-performance, async CLI application that extracts structured product data, handling pagination, dynamic attribute variants (swatches), and color normalization.
+An async CLI application that extracts structured product data, handling pagination, dynamic attribute variants (swatches), and color normalization.
 
 ---
 
 ## Architecture & Design Decisions
 
-This project is built using **SOLID principles** to ensure that extending the scraper for new websites or features is a matter of configuration, not surgery.
+This project is built using **SOLID principles** to ensure that extending the scraper for new websites or features is a matter of configuration.
 
 ### 1. Multi-Site Readiness (Provider Pattern)
-Instead of a hardcoded scraper, we use a **Provider Pattern**. All site-specific logic (selectors, URL patterns, variant extraction) is isolated in a `Provider` class.
+Instead of a hardcoded scraper, I used a **Provider Pattern**. All site-specific logic (selectors, URL patterns, variant extraction) is isolated in a `Provider` class.
 - **ScraperProvider (Protocol)**: Defines the contract.
 - **WebScraperIoProvider (Implementation)**: Contains the logic for the target test site.
-- **Benefit**: To support a new site like Amazon or eBay, you simply implement a new `ScraperProvider` and plug it in.
+- **Benefit**: To support a new site like a real e-commerce site, you simply implement a new `ScraperProvider` and plug it in.
 
 ### 2. The "Async" Jump (High Concurrency)
 I/O is the bottleneck in scraping. The codebase is fully **async/await** from the ground up using `httpx.AsyncClient` and `asyncio`.

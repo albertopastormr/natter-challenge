@@ -25,8 +25,6 @@ class BaseScraperProvider(ABC):
         """The root URL for this provider."""
         return self._base_url
 
-    # --- Common Utilities (Shared by all scrapers) ---
-
     def make_absolute(self, url: str) -> str:
         """Convert a relative path to an absolute URL using the base_url."""
         if not url:
@@ -39,8 +37,6 @@ class BaseScraperProvider(ABC):
         if not text:
             return ""
         return re.sub(r"\s+", " ", text).strip()
-
-    # --- Abstract Methods (Must be implemented by children) ---
 
     @abstractmethod
     def parse_subcategory_urls(self, html: str, current_url: str) -> list[str]:
